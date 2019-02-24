@@ -1,0 +1,19 @@
+sudo: required
+services:
+  -docker
+# building test script for Travis
+# as of now its only testing in client
+before_install:
+  - docker build -t aebenw/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run aebenw/react-test npm test -- --coverage
+
+# once all our tests pass we want to build all our images
+after_success:
+  - docker build -t aebenw/multi-client ./client
+  - docker build -t aebenw/multi-nginx ./nginx
+  - docker build -t aebenw/multi-worker ./worker
+  - docker build -t aebenw/multi-server ./server
+
+# then we need to push it to docker
