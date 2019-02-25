@@ -15,5 +15,11 @@ after_success:
   - docker build -t aebenw/multi-nginx ./nginx
   - docker build -t aebenw/multi-worker ./worker
   - docker build -t aebenw/multi-server ./server
-
 # then we need to push it to docker
+# To do this we need to Log in to Docker via travis
+# config is done on travis.com
+  - echo "$DOCKER_PASS" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker push aebenw/multi-client
+  - docker push aebenw/multi-nginx
+  - docker push aebenw/multi-worker
+  - docker push aebenw/multi-server
