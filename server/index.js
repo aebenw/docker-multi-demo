@@ -7,7 +7,7 @@ const cors = require('cors');
 
 const app = express();
 app.use(cors());
-app.use(bodyParser.json()); 
+app.use(bodyParser.json());
 
 // Postgres Client Setup
 const { Pool } = require('pg');
